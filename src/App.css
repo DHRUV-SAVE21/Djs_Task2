@@ -1,0 +1,570 @@
+/* ====== Base Styles ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated background elements */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(1deg); }
+}
+
+/* ====== Container Card ====== */
+.todo-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  width: 100%;
+  max-width: 480px;
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  position: relative;
+  z-index: 10;
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ====== Heading ====== */
+.todo-container h1 {
+  text-align: center;
+  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 2.75rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.todo-container h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+/* ====== Stats Section ====== */
+.stats-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.8s ease-out 0.2s both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-item {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.stat-item.total { color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+.stat-item.completed { color: #10b981; background: rgba(16, 185, 129, 0.1); }
+.stat-item.active { color: #f59e0b; background: rgba(245, 158, 11, 0.1); }
+
+/* ====== Enhanced Form Styles ====== */
+.todo-form-container {
+  margin-bottom: 2rem;
+  animation: fadeIn 0.8s ease-out 0.4s both;
+}
+
+.todo-form {
+  display: flex;
+  gap: 1rem;
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.9), rgba(241, 245, 249, 0.9));
+  padding: 1.5rem;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.todo-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.6s;
+}
+
+.todo-form:focus-within::before {
+  left: 100%;
+}
+
+.todo-form:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 15px 40px rgba(102, 126, 234, 0.2),
+    0 0 0 2px rgba(102, 126, 234, 0.1);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.todo-form input {
+  flex: 1;
+  padding: 1.125rem 1.5rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  font-size: 1.05rem;
+  outline: none;
+  transition: all 0.3s ease;
+  color:black;
+  background: white;
+  font-weight: 500;
+  min-height: 60px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.todo-form input:focus {
+  border-color: #667eea;
+  box-shadow: 
+    0 0 0 4px rgba(102, 126, 234, 0.15),
+    0 4px 16px rgba(102, 126, 234, 0.1);
+  transform: scale(1.02);
+}
+
+.todo-form input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+  transition: color 0.3s ease;
+}
+
+.todo-form input:focus::placeholder {
+  color: #cbd5e1;
+}
+
+.todo-form button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-weight: 700;
+  border: none;
+  padding: 1.125rem 2rem;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 6px 20px rgba(102, 126, 234, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 70px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.todo-form button::before {
+  content: '+';
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-right: 0.25rem;
+}
+
+.todo-form button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.todo-form button:hover::after {
+  left: 100%;
+}
+
+.todo-form button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    0 10px 30px rgba(102, 126, 234, 0.5),
+    0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.todo-form button:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+/* ====== Filter Buttons ====== */
+.filter-btns {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.8s ease-out 0.6s both;
+}
+
+.filter-btns button {
+  padding: 0.875rem 1.75rem;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.4s ease;
+  background: rgba(255, 255, 255, 0.8);
+  color: #64748b;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.filter-btns button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.filter-btns button:hover::before {
+  left: 100%;
+}
+
+.filter-btns button.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  box-shadow: 
+    0 8px 25px rgba(102, 126, 234, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.filter-btns button:not(.active):hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: #475569;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ====== Task List ====== */
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 400px;
+  overflow-y: auto;
+  animation: fadeIn 0.8s ease-out 0.8s both;
+}
+
+.todo-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.todo-list::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.5);
+  border-radius: 4px;
+}
+
+.todo-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 4px;
+}
+
+.todo-list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a6fd8, #6a42a8);
+}
+
+.todo-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(241, 245, 249, 0.8);
+  border-radius: 16px;
+  margin-bottom: 0.75rem;
+  background: white;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  animation: slideInRight 0.5s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.todo-list li:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(102, 126, 234, 0.1);
+}
+
+.todo-list li:last-child {
+  margin-bottom: 0;
+}
+
+.todo-list li .task-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.todo-list li .task-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.todo-list li.completed .task-checkbox {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-color: #10b981;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.todo-list li.completed .task-checkbox::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.todo-list li .task-text {
+  flex: 1;
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.todo-list li.completed .task-text {
+  text-decoration: line-through;
+  color: #94a3b8;
+  opacity: 0.7;
+}
+
+.todo-list li button.delete-btn {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 10px;
+  opacity: 0.7;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.todo-list li:hover button.delete-btn {
+  opacity: 1;
+}
+
+.todo-list li button.delete-btn:hover {
+  color: #dc2626;
+  background: rgba(239, 68, 68, 0.1);
+  transform: scale(1.1) rotate(90deg);
+}
+
+/* ====== Empty State ====== */
+.todo-list:empty::after {
+  content: '✨ No tasks yet. Add your first task above! ✨';
+  display: block;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 1.1rem;
+  background: rgba(248, 250, 252, 0.8);
+  border-radius: 16px;
+  margin-top: 1rem;
+  border: 2px dashed #e2e8f0;
+}
+
+/* ====== Footer ====== */
+.todo-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(241, 245, 249, 0.8);
+  animation: fadeIn 0.8s ease-out 1s both;
+}
+
+.todo-footer .completed-message {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 16px;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+  display: inline-block;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-5px); }
+  60% { transform: translateY(-3px); }
+}
+
+.todo-footer .progress-message {
+  color: #64748b;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.75rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ====== Responsive Design ====== */
+@media (max-width: 480px) {
+  .todo-container {
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+    margin: 1rem;
+  }
+  
+  .todo-container h1 {
+    font-size: 2.25rem;
+  }
+  
+  .stats-container {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .todo-form {
+    flex-direction: column;
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+  
+  .todo-form input {
+    min-height: 56px;
+    padding: 1rem 1.25rem;
+  }
+  
+  .todo-form button {
+    min-height: 56px;
+    padding: 1rem 1.5rem;
+    width: 100%;
+  }
+  
+  .filter-btns {
+    flex-wrap: wrap;
+  }
+  
+  .filter-btns button {
+    flex: 1;
+    min-width: 100px;
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* ====== Celebration Animation ====== */
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: #ffd700;
+  animation: confetti 3s ease-in-out forwards;
+  z-index: 1000;
+}
